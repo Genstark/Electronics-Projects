@@ -7,40 +7,46 @@ const char vibratorMotor = 3;
 const char led = 4;
 const char buzzer = 5;
 
-void setup(){
-  Serial.begin(9600);
+void setup()
+{
+	Serial.begin(9600);
 	Wire.begin();
 
 	mpu.initialize();
 
-	if (mpu.testConnection()) {
+	if (mpu.testConnection())
+	{
 		Serial.println("MPU6050 connection successful");
 	}
-	else {
+	else
+	{
 		Serial.println("MPU6050 connection failed");
 	}
 
-  pinMode(vibratorMotor, OUTPUT);
-  pinMode(led, OUTPUT);
-  pinMode(buzzer, OUTPUT);
+	pinMode(vibratorMotor, OUTPUT);
+	pinMode(led, OUTPUT);
+	pinMode(buzzer, OUTPUT);
 }
 
-void loop(){
+void loop()
+{
 	int16_t ax, ay, az;
 	int16_t gx, gy, gz;
 
 	mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-	
-	if (abs(gx) > 5000 || abs(gy) > 5000 || abs(gz) > 5000) {
+
+	if (abs(gx) > 5000 || abs(gy) > 5000 || abs(gz) > 5000)
+	{
 		digitalWrite(vibratorMotor, HIGH);
-    digitalWrite(led, HIGH);
-    digitalWrite(buzzer, HIGH);
+		digitalWrite(led, HIGH);
+		digitalWrite(buzzer, HIGH);
 	}
-	else {
-	  Serial.println("No significant motion.");
+	else
+	{
+		Serial.println("No significant motion.");
 		digitalWrite(vibratorMotor, LOW);
-    digitalWrite(led, LOW);
-    digitalWrite(buzzer, LOW);
+		digitalWrite(led, LOW);
+		digitalWrite(buzzer, LOW);
 	}
 
 	//  Serial.print("Gyro X: "); Serial.print(gx);
